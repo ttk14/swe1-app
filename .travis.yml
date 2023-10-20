@@ -6,4 +6,4 @@ python:
 install:
   - pip install -r requirements.txt
 
-script: python3 mysite/manage.py || python mysite/manage.py
+script: python3 manage.py || python manage.py
