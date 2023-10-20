@@ -10,16 +10,7 @@ script:
   - python3 manage.py || python manage.py
   - black --check .
   - flake8 .
+  - coverage run manage.py test
 
-deploy:
-  provider: elasticbeanstalk
-  access_key_id: $AWS_ACCESS_KEY_ID
-  secret_access_key: $AWS_SECRET_ACCESS_KEY
-  region: "us-east-1"
-  app: "polls"
-  env: "polls-dev"
-  bucket_name: $AWS_BUCKET_NAME
-  bucket_path: "polls/"
-  on:
-    repo: ttk14/swe1-app
-    branch: main
+after_script:
+  - coveralls
