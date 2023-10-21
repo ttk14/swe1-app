@@ -6,8 +6,10 @@ python:
 install:
   - pip install -r requirements.txt
 
+before-script:
+  - python manage.py migrate
+
 script:
-  - python3 manage.py || python manage.py
   - black --check .
   - flake8 .
   - coverage run manage.py test
