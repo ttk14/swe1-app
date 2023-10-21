@@ -1,18 +1,23 @@
 language: python
+os: linux
+dist: jammy
 
 python:
-  - 3.9
+  - "3.9"
 
 install:
+  - gem install webrick
   - pip install -r requirements.txt
+  - mkdir ./tools
+  - curl -L https://coveralls.io/coveralls-linux.tar.gz | tar -xz -C ./tools
 
+before_script:
+  - python manage.py migrate
 
 script:
   - black --check .
   - flake8 .
-  - python manage.py migrate
   - coverage run manage.py test
+  - coverage xml
+  - ./tools/coveralls report --repo-token=$COVERALLS_REPO_TOKEN ./coverage.xml
 
-after_success:
-  - curl -sL https://coveralls.io/coveralls-linux.tar.gz | tar -xz
-  - ./coveralls
