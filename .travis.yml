@@ -6,12 +6,11 @@ python:
 install:
   - pip install -r requirements.txt
 
-before-script:
-  - python manage.py migrate
 
 script:
   - black --check .
   - flake8 .
+  - python manage.py migrate
   - coverage run manage.py test
 
 after_script:
